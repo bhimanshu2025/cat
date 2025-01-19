@@ -1,4 +1,4 @@
-DEV PURPOSE ONLY (FOR DEPLOYMENT OF APP REFER - https://css-git.juniper.net/bhimanshu/cat/-/blob/master/kubernetes/README.md)
+DEV PURPOSE ONLY (FOR DEPLOYMENT OF APP REFER - https://github.com/bhimanshu2025/cat/-/blob/master/kubernetes/README.md)
 Deploy mysql app and service (creates persistent volumes, pvc and secrets)
 
 kubectl apply -f mysql-depl.yml 

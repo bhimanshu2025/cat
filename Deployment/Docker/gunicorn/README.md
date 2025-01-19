@@ -1,6 +1,6 @@
 On a node with docker installed, follow below steps. Edit the cat/Deployment/Docker/wsgi/Dockerfile to modify the version/tag
 
-git clone https://css-git.juniper.net/bhimanshu/cat.git
+git clone https://github.com/bhimanshu2025/cat.git
 cd /root/cat/Deployment/Docker/gunicorn/
 docker build -t bhimanshu/cat:beta .
 

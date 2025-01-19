@@ -131,7 +131,7 @@ def test_2_edit_user(client):
     initialize_all(client)
     users_old_schema = client.get("/api/user/test_user", auth=("admin", "admin")).json
     data = '''{
-  "email": "cde@juniper.net",
+  "email": "cde@gmail.com",
   "teamname": "Global",
   "active": false,
   "shift_start": "09:00:01",

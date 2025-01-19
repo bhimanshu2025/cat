@@ -1,4 +1,4 @@
-DEV PURPOSE ONLY (FOR DEPLOYMENT REFER - https://css-git.juniper.net/bhimanshu/cat/-/blob/master/kubernetes/README.md)
+DEV PURPOSE ONLY (FOR DEPLOYMENT REFER - https://github.com/bhimanshu2025/cat/-/blob/master/kubernetes/README.md)
 Deploy cat app:
 
 kubectl apply -f cat-deploy.yml 

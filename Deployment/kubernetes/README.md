@@ -2,7 +2,7 @@ Note: We expect you to have a kubernetes environment ready before following belo
 
 STEP 1: Download the repo on node where you deploy resources in your k8 environment
 cd /root/
-git clone https://css-git.juniper.net/bhimanshu/cat.git
+git clone https://github.com/bhimanshu2025/cat.git
 
 STEP 2: Copy or mount the schema.sql file from /root/cat/REST-API/cat/mysql/schema.sql to /mnt/sql_tmp/ directory on node where mysql pod will be running.
 I had 3 worker nodes. I created  /mnt/sql_tmp/  directory on all 3 nodes and copied the schema.sql file into it

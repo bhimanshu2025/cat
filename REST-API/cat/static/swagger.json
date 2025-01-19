@@ -1518,7 +1518,7 @@ components:
           example: abc@xyz.com
         mswebhook:
           type: string
-          example: https://junipernetworks.webhook.office.com/webhookb2/6ef427de-2e9
+          example: https://example.webhook.office.com/webhookb2/6ef427de-2e9
           description: Microsoft teams webhook
     AddTeam:
       type: object

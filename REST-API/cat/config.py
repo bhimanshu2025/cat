@@ -12,17 +12,13 @@ class Config:
         SQLALCHEMY_BINDS = json.loads(os.environ.get('SQLALCHEMY_BINDS')) 
     else: 
         SQLALCHEMY_BINDS = {'provision': 'sqlite:///provision.db'}
-#     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:Jnpr123!@10.85.216.114:3306/cat'
-#     SQLALCHEMY_BINDS = {
-#     'provision': 'mysql+pymysql://root:Jnpr123!@10.85.216.114:3306/provision'
-# }
     EXTERNAL_CASE_UPDATE_CHECK_INTERVAL = os.environ.get('EXTERNAL_CASE_UPDATE_CHECK_INTERVAL') or 60  # in minutes, defaults to hourly
     ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD') or "admin"
-    MAIL_SERVER = os.environ.get('MAIL_SERVER') or "smtp.juniper.net"
+    MAIL_SERVER = os.environ.get('MAIL_SERVER') or "smtp.gmail.com"
     MAIL_PORT = os.environ.get('MAIL_PORT') or 25
     MAIL_USE_TLS = os.environ.get('MAIL_USE_TLS') or False
-    MAIL_NO_REPLY_SENDER = os.environ.get('MAIL_NO_REPLY_SENDER') or "cat-do-not-reply@juniper.net"
-    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL') or "catadmin@juniper.net"
+    MAIL_NO_REPLY_SENDER = os.environ.get('MAIL_NO_REPLY_SENDER') or "cat-do-not-reply@gmail.com"
+    ADMIN_EMAIL = os.environ.get('ADMIN_EMAIL') or "catadmin@gmail.com"
     # Bearer token is obsolete and no longer used in the app.
     BEARER_TOKEN = os.environ.get('BEARER_TOKEN') or \
         "00DDC00000041rF!ARQAQO5DWjCB7rVAW62vnbba8n6OMrrh4mSov6Wn3Lj_.z0dAxm1Sta85M.4MAA7XSA9.bl1OqBKuvStbAY53RUnWmjYj6Vw"

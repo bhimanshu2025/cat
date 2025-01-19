@@ -21,10 +21,10 @@ apt-get -y install git
 
 download the git repo 
 cd /root/
-git clone https://css-git.juniper.net/bhimanshu/cat.git
+git clone https://github.com/bhimanshu2025/cat.git
 cd cat
 git config --global user.name "Himanshu Bahukhandi"
-git config --global user.email "bhimanshu@juniper.net"
+git config --global user.email "himanshu.surendra@gmail.com"
 
 create python3 evnv
 In visual studio select "Python: Create Environment" in command Pallete ctrl+shift+p (had to install python extension first)

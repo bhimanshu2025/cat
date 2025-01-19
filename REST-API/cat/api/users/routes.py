@@ -53,7 +53,7 @@ def login():
 
 # For POST request, below are fields that can be updated
 # {
-#      "email": "nishant@juniper.net",
+#      "email": "nishant@gmail.com",
 #      "teamname": "T6",
 #      "active": True,
 #      "timezone": "US\Pacific",
@@ -85,7 +85,7 @@ def user(id):
 
 # {
 # *    "username": "nishant",
-#      "email": "nishant@juniper.net",
+#      "email": "nishant@gmail.com",
 # *    "password": "abc",
 # *    "teamname": "T6",
 #      "active": True,
