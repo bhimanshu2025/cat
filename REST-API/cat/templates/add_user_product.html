@@ -1,0 +1,51 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="" onsubmit="return confirm('Confirm Operation?');">
+        {{ form.hidden_tag() }}
+        <legend class="border-bottom mb-4">{{ legend }}</legend>
+        <fieldset class="form-group">
+            {% if legend == "Edit User Product" %}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" value="{{ productname }}" aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
+            </div>
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" value="{{ username }}" aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
+            </div>
+            {% else %}
+            <div class="dropdown-item">
+                {{ form.productname.label(class="form-control-label") }}
+                {{ form.productname(class="form-control form-control-md") }}
+            </div>
+            <div class="dropdown-item">
+                {{ form.username.label(class="form-control-label") }}
+                {{ form.username(class="form-control form-control-md") }}
+            </div>
+            {% endif %}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.quota.label(class="form-control-label") }}
+                    {% if form.quota.errors %}
+                        {{ form.quota(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.quota.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.quota(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset> 
+            <div class="form-check">
+                {{ form.active(class="form-check-input") }}
+                {{ form.active.label(class="form-check-label") }}
+            </div> 
+        </fieldset>   
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>        
+{% endblock %}

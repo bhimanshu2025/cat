@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='main.css') }}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if title %}
+        <title> CAT {{ title }}</title>
+    {% else %}
+        <title>CAT</title>
+    {% endif %}
+    <title>Home</title>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="navbar navbar-expand-md navbar-dark bg-steel fixed-top">
+          <div class="container">
+            <a class="navbar-brand mr-4" href="/">CAT</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggle" aria-controls="navbarToggle" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarToggle">
+              <div class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCases" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Cases
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('main.cases') }}">Assigned</a>
+                    <a class="dropdown-item" href="{{ url_for('main.unassign_case')}}">Unassign Case</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownUsers" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Users
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('users_b.users') }}">All Users</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.add_user') }}">Add User</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.user_product') }}">All User Product Associations</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.add_user_product') }}">Add User To Product</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.reactivate_user') }}">Schedule User Reactivation</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.schedule_shift_change') }}">Schedule Shift Change</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.schedule_handoffs') }}">Schedule Handoffs</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.jobs') }}">Jobs</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownTeams" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Teams
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('teams_b.teams') }}">All Teams</a>
+                    <a class="dropdown-item" href="{{ url_for('teams_b.add_team') }}">Add Team</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProducts" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Products
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('products_b.products') }}">All Products</a>
+                    <a class="dropdown-item" href="{{ url_for('products_b.add_product') }}">Add Product</a>
+                    <a class="dropdown-item" href="{{ url_for('products_b.schedule_sf_integration') }}">Schedule Salesforce Polling Reactivation</a>
+                  </div>
+                </li>
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownProducts" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    My Stuff
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url_for('users_b.my_details') }}">My Details</a>
+                    <a class="dropdown-item" href="{{ url_for('main.cases_of_user', username=current_user.username) }}">My Cases</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.salesforce_emails') }}">Salesforce Emails</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.add_salesforce_email') }}">Add Salesforce Email</a>
+                    <a class="dropdown-item" href="{{ url_for('users_b.jinja2_variables') }}">Jinja2 Variables</a>
+                  </div>
+                </li>
+                <a class="nav-item nav-link" href="{{ url_for('main.audit') }}">Audit</a>
+                <a class="nav-item nav-link" href="{{ url_for('main.about') }}">About</a>
+              </div>
+              <!-- Navbar Right Side -->
+              <div class="navbar-nav">
+                {% if current_user.is_authenticated %}
+                  <a class="nav-item nav-link" target="_blank" href="{{ url_for('main.swagger') }}">REST-API</a>
+                  <a class="nav-item nav-link" href="{{ url_for('users_b.account') }}">Account</a>
+                  <a class="nav-item nav-link" href="{{ url_for('users_b.logout') }}">Logout</a>
+                {% else %}
+                  <a class="nav-item nav-link" href="{{ url_for('users_b.login') }}">Login</a>
+                  <a class="nav-item nav-link" href="{{ url_for('users_b.add_user') }}">Register</a>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </nav>
+    </header>
+    <main role="main" class="container">
+        <div class="row">
+          <div class="col-md-8">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                {% for category, message in messages %}
+                  <div class="alert alert-{{ category }}">
+                    {{ message }}
+                  </div>
+                {% endfor %}
+              {% endif %}
+            {% endwith %}
+          </div>
+          <!-- <div class="col-md-4">
+            <div class="content-section">
+              <h3>WIP</h3>
+                <ul class="list-group">
+                  <li class="list-group-item list-group-item-light">Latest Cases</li>
+                  <li class="list-group-item list-group-item-light">Audit</li>
+                  <li class="list-group-item list-group-item-light">etc</li>
+                </ul>
+            </div>
+          </div> -->
+        </div>
+        <div class="row">
+        {% block content %}{% endblock %}
+        </div>
+      </main>
+      <script> 
+        $(document).ready(function () { 
+            $('.dropdown').hover(function () { 
+                $(this).find('.dropdown-menu') 
+                   .stop(true, true).delay(100).fadeIn(200); 
+            }, function () { 
+                $(this).find('.dropdown-menu') 
+                  .stop(true, true).delay(100).fadeOut(200); 
+            }); 
+        }); 
+    </script> 
+    <!-- Optional JavaScript -->
+    <!-- Popper.js, then Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+" crossorigin="anonymous"></script>
+</body>
+</html>

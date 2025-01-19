@@ -1,0 +1,36 @@
+Scenario tested on Oct 5, 2023
+
+Assumtions:
+- All 4 users are new and have had 0 cases so far in the system.
+
+Product(quota_days) P4(1)
+Strategy: s1
+Team T4
+Users(quota): u1(4), u2(2), u3(1), u4(2)
+
+
+# of cases       u1        u2       u3         u4                 List of Eligible Users           Computation numbers(num of                     Comments
+                                                                                                   cases assigned over quota_days * quota)
+0                0         0        0          0                  []
+1                0         0        1*         0                  [u3]                              [0]
+2                0         0        2*         0                  [u3]                              [1]
+3                0         1*       2          0                  [u2, u3, u4]                      [0, 1, 0]                                      u2 and u4 added to contetion as u3 now has 2 cases. u2 and u4 tie breaker was username 
+4                0         1        2          1*                 [u2, u3, u4]                      [2, 2, 0]                                      u4 has least value, hence u4 gets the case 
+5                0         2*       2          1                  [u2, u3, u4]                      [2, 2, 2]
+6                0         2        3*         1                  [u2, u3, u4]                      [4, 2, 2]
+7                0         2        3          2*                 [u2, u3, u4]                      [4, 3, 2]
+8                0         2        4*         2                  [u2, u3, u4]                      [4, 3, 4]
+9                0         3*       4          2                  [u2, u3, u4]                      [4, 4, 4]
+10               0         3        5*         2                  [u2, u3, u4]                      [6, 4, 4]
+11               0         3        5          3*                 [u2, u3, u4]                      [6, 5, 4]
+12               0         3        6*         3                  [u2, u3, u4]                      [6, 5, 6]
+13               0         4*       6          3                  [u2, u3, u4]                      [6, 6, 6]
+14               0         4        7          3                  [u2, u3, u4]                      [8, 6, 6]
+15               0         4        7          4*                 [u2, u3, u4]                      [8, 7, 6]
+16               1*        4        7          4                  [u1, u2, u3, u4]                  [0, 8, 7, 8]                                    u1 is now in contention as all others have 4(quota of u1) cases.
+17               2*        4        7          4                  [u1, u2, u3, u4]                  [4, 8, 7, 8]                                    u1 is still least so it gets next case too 
+18               2         4        8*         4                  [u1, u2, u3, u4]                  [8, 8, 7, 8]
+19               3*        4        8          4                  [u1, u2, u3, u4]                  [8, 8, 8, 8]
+20               3         5*       8          4                  [u1, u2, u3, u4]                  [12, 8, 8, 8]
+21               3         5        9*         4                  [u1, u2, u3, u4]                  [12, 10, 8, 8]
+22               3         5        9          5*                 [u1, u2, u3, u4]                  [12, 10, 9, 8]

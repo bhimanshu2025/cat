@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Salesforce Emails</legend>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+  <caption>My Salesforce Emails</caption>
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Subject</th>
+        <th scope="col">Body</th>
+        <th scope="col">Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for email in emails %}
+      <tr>
+        <th scope="col"><a href="{{ url_for('users_b.edit_salesforce_email', email_name=email.email_name) }}">{{ email.email_name }}</a></th>
+        <th scope="col">{{ email.email_subject }}</th>
+        <th scope="col">{{ email.email_body }}</th>
+        <th scope="col"><a href="{{ url_for('users_b.delete_salesforce_email', email_name=email.email_name) }}" onclick="return confirm('Delete email template {{ email.email_name }}?')"><img class="icons-img" src="{{ url_for('static', filename='icons/trash.png') }}"></a><a href="{{ url_for('users_b.edit_salesforce_email', email_name=email.email_name) }}"><img class="icons-img" src="{{ url_for('static', filename='icons/edit.png') }}"></a></th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

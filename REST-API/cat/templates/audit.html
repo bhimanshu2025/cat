@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Audit</legend>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+  <caption>List of all audits of my team and user admin</caption>
+    <thead>
+      <tr>
+        <th scope="col">Task type</th>
+        <th scope="col">User</th>
+        <th scope="col">Time ({{ current_user.timezone }})</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for audit in audits.items %}
+        <tr>
+        <th scope="col"><a href="{{ url_for('main.audit_details', id=audit.id) }}">{{ audit.task_type }}</a></th>
+        <th scope="col">{{ audit.user }}</th>
+        <th scope="col">{{ current_user.user_datetime(audit.time) }}</th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% for page_num in audits.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if page_num == audits.page %}
+        <a class="btn btn-info mb-4" href="{{ url_for('main.audit', page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('main.audit', page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+{% endblock %}

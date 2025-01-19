@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">User Product</legend>
+{% for productname, ups in dict.items() %}
+<legend class="border-bottom mb-4 sm">{{ productname }}</legend>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+  <caption>List of all users supporting {{ productname }}</caption>
+        <thead>
+        <tr>
+            <th scope="col">Username</th>
+            <th scope="col">quota</th>
+            <th scope="col">active</th>
+            <th scope="col">Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for up in ups %}
+        <tr>
+                {% if (current_user.admin and productname in current_user.product_names()) or current_user.username == up.username or current_user.username == "admin" %}
+                        {% if up.active %}
+                                <th scope="col" ><a style="color:green" href="{{ url_for('users_b.edit_user_product', username=up.username, productname=productname)}}">{{ up.username }}</a></th>
+                        {% else %}
+                                <th scope="col"><a style="color:red" href="{{ url_for('users_b.edit_user_product', username=up.username, productname=productname)}}">{{ up.username }}</a></th>
+                        {% endif %}
+                {% else %}
+                        {% if up.active %}
+                                <th scope="col" ><a style="color:green">{{ up.username }}</a></th>
+                        {% else %}
+                                <th scope="col"><a style="color:red">{{ up.username }}</a></th>
+                        {% endif %}
+                {% endif %}
+                <th scope="col">{{ up.quota }}</th>
+                <th scope="col">{{ up.active }}</th>
+                {% if (current_user.admin and productname in current_user.product_names()) or current_user.username == up.username  or current_user.username == "admin" %}
+                        <th scope="col"><a href="{{ url_for('users_b.delete_user_product', username=up.username, productname=productname)}}" onclick="return confirm('Remove {{ up.username }} from supporting {{ productname }}?')"><img class="icons-img" src="{{ url_for('static', filename='icons/trash.png') }}"></a><a href="{{ url_for('users_b.edit_user_product', username=up.username, productname=productname)}}"><img class="icons-img" src="{{ url_for('static', filename='icons/edit.png') }}"></a></th>
+                {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+</table>
+{% endfor %}
+{% endblock %}

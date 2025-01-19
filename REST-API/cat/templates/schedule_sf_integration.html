@@ -1,0 +1,73 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="" onsubmit="return confirm('Confirm scheduling the job?');">
+        {{ form.hidden_tag() }}
+        <legend class="border-bottom mb-4">Schedule SF Integration</legend>
+        <fieldset class="form-group">
+            <div class="dropdown-item">
+                {{ form.productname.label(class="form-control-label") }}
+                {{ form.productname(class="form-control form-control-md") }}
+            </div>
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.datetime.label(class="form-control-label") }}
+                    {% if form.datetime.errors %}
+                        {{ form.datetime(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.datetime.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.datetime(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>   
+            <div class="dropdown-item">
+                {{ form.timezone.label(class="form-control-label") }}
+                {{ form.timezone(class="form-control form-control-md") }}
+            </div> 
+            <div class="form-check">
+              {{ form.sf_enabled(class="form-check-input") }}
+              {{ form.sf_enabled.label(class="form-check-label") }}
+            </div>
+            <br>
+            <div class="form-group">
+                {{ form.holiday_list.label(class="form-control-label") }}
+                {% if form.holiday_list.errors %}
+                    {{ form.holiday_list(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.holiday_list.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.holiday_list(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>   
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+    <caption>List of all active jobs</caption>
+      <thead>
+        <tr>
+          <th scope="col">Job Id</th>
+          <th scope="col">Details ({{ current_user.timezone }})</th>
+          <th scope="col">Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        <tr>
+              <th scope="col">{{ job.id }}</th>
+              <th scope="col">{{ current_user.user_datetime(job.next_run_time) }}</th>
+              <th scope="col"><a href="{{ url_for('products_b.products_delete_job', jobid=job.id) }}" onclick="return confirm('Delete job {{ job.id }}?')"><img class="icons-img" src="{{ url_for('static', filename='icons/trash.png') }}"></a></th>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>       
+{% endblock %}

@@ -1,0 +1,1749 @@
+openapi: 3.0.3
+info:
+  title: CAT
+  description: Case Assignment Tool
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: himanshu.surendra@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: /
+tags:
+  - name: user
+    description: Everything about users
+  - name: case
+    description: Everything about cases
+  - name: audit
+    description: Everything about audit
+  - name: product
+    description: Everything about products
+  - name: team
+    description: Everything about team
+  - name: userproduct
+    description: User Product associations
+paths:
+  /api/login:
+    post:
+      tags:
+        - user
+      summary: Login check
+      description: ''
+      operationId: login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Login'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid Input
+        '401':
+          description: Authentication Failure
+  /api/users:
+    get:
+      tags:
+        - user
+      summary: Get all users
+      description: ''
+      operationId: getUsers
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/user/{username}:
+    get:
+      tags:
+        - user
+      summary: Get user by user name
+      description: ''
+      operationId: getUserByName
+      parameters:
+        - name: username
+          in: path
+          description: The name that needs to be fetched.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '404':
+          description: User not found
+    post:
+      tags:
+        - user
+      summary: Update user
+      description: ''
+      operationId: updateUser
+      parameters:
+        - name: username
+          in: path
+          description: The user details that needs to be fetched.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EditUser'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+        '401':
+          description: Unauthorized Access
+    delete:
+      tags:
+        - user
+      summary: Delete user
+      description: ''
+      operationId: deleteUser
+      parameters:
+        - name: username
+          in: path
+          description: The user name that needs to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+        '401':
+          description: Unauthorized Access
+  /api/user:
+    post:
+      tags:
+        - user
+      summary: Add a new user
+      description: ''
+      operationId: addUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUser'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid Input
+  /api/user/reset-password/{email}:
+    post:
+      tags:
+        - user
+      summary: Reset user password
+      description: ''
+      operationId: UserResetPassword
+      parameters:
+        - name: email
+          in: path
+          description: The user's email whose password needs to be changed
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid Input
+        '404':
+          description: User not found
+  /api/user/change-password/{username}:
+    post:
+      tags:
+        - user
+      summary: Change user password
+      description: ''
+      operationId: UserChangePassword
+      parameters:
+        - name: username
+          in: path
+          description: The username whose password needs to be changed
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePassword'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Invalid Input
+        '404':
+          description: User not found
+  /api/user/reactivate/{username}:
+    post:
+      tags:
+        - user
+      summary: Schedule User reactivation
+      description: ''
+      operationId: reactivate
+      parameters:
+        - name: username
+          in: path
+          description: The username that needs to be scheduled for reactivation
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReactivateUser'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid Input
+  /api/user/schedule-shift-change/{username}:
+    post:
+      tags:
+        - user
+      summary: Schedule User shift change
+      description: ''
+      operationId: scheduleshiftchange
+      parameters:
+        - name: username
+          in: path
+          description: The username whose shift change needs to be scheduled
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleShiftChange'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid Input
+  /api/user/schedule-handoffs/{username}:
+    post:
+      tags:
+        - user
+      summary: Schedule User cases handoffs
+      description: ''
+      operationId: schedulehandoffs
+      parameters:
+        - name: username
+          in: path
+          description: The username whose cases needs to be shcheduled for handoffs
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleHandoffs'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid Input
+  /api/delete-job/{jobid}:
+    delete:
+      tags:
+        - user
+      summary: Delete a scheduled job
+      description: ''
+      operationId: deleteJob
+      parameters:
+        - name: jobid
+          in: path
+          description: The jobid of job that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: Not Found
+  /api/jobs/{page}:
+    get:
+      tags:
+        - user
+      summary: Get all jobs (audit)
+      description: ''
+      operationId: getJobs
+      parameters:
+        - name: page
+          in: path
+          description: The page number to be fetched.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Jobs'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Jobs'
+  /api/salesforce-emails:
+    get:
+      tags:
+        - user
+      summary: Get all email templates belonging to the logged in user
+      description: ''
+      operationId: getSalesforceEmails
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+  /api/add-salesforce-email:
+    post:
+      tags:
+        - user
+      summary: Add a email template
+      description: ''
+      operationId: addSalesforceEmail
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddSalesforceEmail'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+        '400':
+          description: Invalid Input
+  /api/salesforce-email/{email_name}:
+    get:
+      tags:
+        - user
+      summary: Get email template by template name
+      description: ''
+      operationId: getSalesforceEmail
+      parameters:
+        - name: email_name
+          in: path
+          description: The email templates name that needs to be fetched.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+        '404':
+          description: Email template not found
+    post:
+      tags:
+        - user
+      summary: Update email template
+      description: ''
+      operationId: UpdateSalesforceEmail
+      parameters:
+        - name: email_name
+          in: path
+          description: The email templates name that needs to be edited
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SalesforceEmailModel'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+        '401':
+          description: Unauthorized Access
+    delete:
+      tags:
+        - user
+      summary: Delete an email template
+      description: ''
+      operationId: deleteSalesforceEmail
+      parameters:
+        - name: email_name
+          in: path
+          description: The email template user name that needs to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SalesforceEmail'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+        '401':
+          description: Unauthorized Access
+  /api/jinja2_variables:
+    get:
+      tags:
+        - user
+      summary: Get all j2 variables exposed to users
+      description: ''
+      operationId: getJinja2Variables
+      responses:
+        '200':
+          description: successful operation
+        '401':
+          description: Unauthorized Access
+  /api/all-user-product:
+    get:
+      tags:
+        - userproduct
+      summary: Get all user product association details
+      description: ''
+      operationId: getAllUserProduct
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProduct'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/UserProduct'
+  /api/user-product:
+    post:
+      tags:
+        - userproduct
+      summary: Add a user to a product or update their association(quota, active)
+      description: ''
+      operationId: addUserProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProduct'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProduct'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/UserProduct'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object Not Found
+        '401':
+          description: Unauthorized Access
+  /api/user-product/{username}/{productname}:
+    get:
+      tags:
+        - userproduct
+      summary: Get user username and product productname association details
+      description: ''
+      operationId: UserProduct
+      parameters:
+        - name: username
+          in: path
+          description: The username whose associations with a product needs to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: productname
+          in: path
+          description: The productname whose associations with a user needs to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProduct'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/UserProduct'
+    delete:
+      tags:
+        - userproduct
+      summary: Remove user from supporting a product
+      description: ''
+      operationId: deleteUserProduct
+      parameters:
+        - name: username
+          in: path
+          description: The username whose associations with a product needs to be deleted.
+          required: true
+          schema:
+            type: string
+        - name: productname
+          in: path
+          description: The productname whose associations with a user needs to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProduct'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/UserProduct'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+        '401':
+          description: Unauthorized Access
+  /api/products:
+    get:
+      tags:
+        - product
+      summary: Get all products
+      description: ''
+      operationId: getProducts
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /api/product/{productname}:
+    get:
+      tags:
+        - product
+      summary: Get product details by productname
+      description: ''
+      operationId: getProductByName
+      parameters:
+        - name: productname
+          in: path
+          description: The product details that needs to be fetched.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Object not found
+    post:
+      tags:
+        - product
+      summary: Update product
+      description: ''
+      operationId: updateProduct
+      parameters:
+        - name: productname
+          in: path
+          description: The product name that needs to be edited
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductModel'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+        '401':
+          description: Unauthorized Access
+    delete:
+      tags:
+        - product
+      summary: Delete product
+      description: ''
+      operationId: deleteProduct
+      parameters:
+        - name: productname
+          in: path
+          description: The product name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+        '401':
+          description: Unauthorized Access
+  /api/users-of-product/{productname}:
+    get:
+      tags:
+        - product
+      summary: Get all users list supporting product productname
+      description: ''
+      operationId: getUsersOfProduct
+      parameters:
+        - name: productname
+          in: path
+          description: The productname who users list needs to be fetched
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/product:
+    post:
+      tags:
+        - product
+      summary: Add a new product
+      description: ''
+      operationId: addProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddProduct'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '400':
+          description: Invalid Input
+  /api/product/schedule-sf-integration/{productname}:
+    post:
+      tags:
+        - product
+      summary: Schedule SF case polling for product productname
+      description: ''
+      operationId: scheduleSfIntegration
+      parameters:
+        - name: productname
+          in: path
+          description: The productname that needs to be scheduled for sf polling
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ScheduleSFIntegration'
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid Input
+  /api/product/delete-job/{jobid}:
+    delete:
+      tags:
+        - product
+      summary: Delete a scheduled job specific to a product
+      description: ''
+      operationId: productdeleteJob
+      parameters:
+        - name: jobid
+          in: path
+          description: The jobid of job that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: Not Found
+  /api/teams:
+    get:
+      tags:
+        - team
+      summary: Get all teams
+      description: ''
+      operationId: getTeams
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Team'
+  /api/users-of-team/{teamname}:
+    get:
+      tags:
+        - team
+      summary: Get users of team teamname
+      description: ''
+      operationId: getUsersOfTeam
+      parameters:
+        - name: teamname
+          in: path
+          description: The teamname who users list needs to be fetched
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/User'
+  /api/team/{teamname}:
+    get:
+      tags:
+        - team
+      summary: Get team details by teamname
+      description: ''
+      operationId: getTeamDetails
+      parameters:
+        - name: teamname
+          in: path
+          description: The teamname whose details needs to be fetched.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '404':
+          description: Team not found
+    post:
+      tags:
+        - team
+      summary: Update team
+      description: ''
+      operationId: updateTeam
+      parameters:
+        - name: teamname
+          in: path
+          description: The teamname whose details needs to be fetched.
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamModel'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          description: Invalid Input
+    delete:
+      tags:
+        - team
+      summary: Delete team
+      description: ''
+      operationId: deleteTeam
+      parameters:
+        - name: teamname
+          in: path
+          description: The team name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+  /api/team:
+    post:
+      tags:
+        - team
+      summary: Add a new team
+      description: ''
+      operationId: addTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTeam'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          description: Invalid Input
+  /api/audit/{page}:
+    get:
+      tags:
+        - audit
+      summary: Get list of all audit records
+      description: ''
+      operationId: audit
+      parameters:
+        - name: page
+          in: path
+          description: The page number to be fetched.
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Audit'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Audit'
+  /api/assign-case:
+    post:
+      tags:
+        - case
+      summary: Assign case
+      description: ''
+      operationId: assignACase
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AssignCaseReq'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+  /api/unassign-case/{id}:
+    post:
+      tags:
+        - case
+      summary: Unassign case
+      description: ''
+      operationId: unassignCase
+      parameters:
+        - name: id
+          in: path
+          description: The case id that needs to be unassigned
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comments'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+  /api/cases:
+    get:
+      tags:
+        - case
+      summary: Get list of all cases and their details
+      description: ''
+      operationId: getCases
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: page number to return data from
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Case'
+  /api/case/{id}:
+    get:
+      tags:
+        - case
+      summary: Get case by case id
+      description: ''
+      operationId: getCaseDetails
+      parameters:
+        - name: id
+          in: path
+          description: The case id whose details needs to be fetched.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '404':
+          description: Case not found
+  /api/cases-of-product/{productname}:
+    get:
+      tags:
+        - case
+      summary: Get all cases of product productname
+      description: ''
+      operationId: getCasesOfProduct
+      parameters:
+        - name: productname
+          in: path
+          description: productname whose list of cases needs to be fetched
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: page number to return data from
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '404':
+          description: Case not found
+  /api/cases-of-team/{teamname}:
+    get:
+      tags:
+        - case
+      summary: Get cases of all users belonging to team teamname.
+      description: ''
+      operationId: getCasesOfTeam
+      parameters:
+        - name: teamname
+          in: path
+          description: teamname whose list of cases needs to be fetched
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: page number to return data from
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '404':
+          description: Case not found
+  /api/cases-assigned-by-user/{username}:
+    get:
+      tags:
+        - case
+      summary: Get all cases assigned by user username
+      description: ''
+      operationId: getCasesAssignedByUser
+      parameters:
+        - name: username
+          in: path
+          description: username whose list of assigned_by cases needs to be fetched
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: page number to return data from
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '404':
+          description: Case not found
+  /api/cases-of-user/{username}:
+    get:
+      tags:
+        - case
+      summary: Get all cases assigned to user username
+      description: ''
+      operationId: getCasesOfUser
+      parameters:
+        - name: username
+          in: path
+          description: username whose list of assigned cases needs to be fetched
+          required: true
+          schema:
+            type: string
+        - in: query
+          name: page
+          schema:
+            type: integer
+          description: page number to return data from
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Case'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Case'
+        '404':
+          description: Case not found
+  /api/case-count-of-all-users:
+    post:
+      tags:
+        - case
+      summary: Get case count of users over a period listed by interval. Can be further filtered by product and/or team.
+      description: ''
+      operationId: getCaseCountOfAllUsers
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CaseCountReq'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CaseCount'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/CaseCount'
+        '400':
+          description: Invalid Input
+        '404':
+          description: Object not found
+components:
+  schemas:
+    AssignCaseReq:
+      required:
+        - case_id
+        - product
+      type: object
+      properties:
+        case_id:
+          type: string
+          example: 2023-0910-029384
+        product:
+          type: string
+          example: Product1
+        priority:
+          type: string
+          example: p2
+        comments:
+          type: string
+          example: this is an example
+        mode:
+          type: string
+          enum:
+            - auto
+            - manual
+            - auto-reassign
+          description: defaults to auto. if manual, specify user to assign the case to. If auto-reassign, the case gets auto-reassigned if already cat'ed or gets assigned if not already cat'ed
+        user:
+          type: string
+          description: username to assign case to if mode is manual
+        check_in_shift:
+          type: boolean
+          description: whether to check if user is in shift or not when assiging a case
+        sf_account_name:
+          type: string
+          description: account name in salesforce
+          example: xyz
+        sf_email_name:
+          type: string
+          description: j2 email template name
+          example: email1
+        delayed_assignment:
+          type: string
+          description: time to consider to check which users are in shift when assigning case
+          example: 16:00:00
+    UserModel:
+      type: object
+      properties:
+        email:
+          type: string
+          example: abc@efg.com
+        teamname:
+          type: string
+          example: Team1
+        active:
+          type: boolean
+          description: default is 1
+        admin:
+          type: boolean
+          description: whether the user is admin or not. Default is false
+        team_email_notifications:
+          type: boolean
+          description: whether the user recives team activity notifications. Default is false
+        monitor_case_updates:
+          type: boolean
+          description: Monitor users cases for external updates when user is ooo or on weekends. Default is false
+        shift_start:
+          type: string
+          example: '09:00:00'
+        shift_end:
+          type: string
+          example: '18:00:00'
+        first_name:
+          type: string
+          example: 'Tom'
+        last_name:
+          type: string
+          example: 'Kumar'
+        timezone:
+          type: string
+          example: US/Pacific
+          description: python lib pytz format
+    User:
+      allOf:
+        - type: object
+        - $ref: '#/components/schemas/UserModel'
+      properties:
+        username:
+          type: string
+          example: u1
+        user_since:
+          type: string
+          description: default is current timestamp when adding a new user.
+          example: Fri, 06 Oct 2023 01:58:56 GMT
+        products:
+          type: string
+          example: Product1
+        full_name:
+          type: string
+          example: Bob Marley
+        last_login:
+          type: string
+          description: default is user creation timestamp. keeps track of users last login.
+          example: Sat, 07 Oct 2023 12:45:56 GMT
+        in_shift:
+          type: boolean
+          description: whether the user is in shift or not when the call is made
+          example: true
+    AddUser:
+      allOf:
+        - $ref: '#/components/schemas/UserModel'
+        - type: object
+      required:
+        - username
+        - password
+        - teamname
+      properties:
+        username:
+          type: string
+          example: u1
+        password:
+          type: string
+    EditUser:
+      allOf:
+        - $ref: '#/components/schemas/UserModel'
+        - type: object
+    ChangePassword:
+      required:
+        - current_password
+        - new_password
+      properties:
+        current_password:
+          type: string
+          example: test
+        new_password:
+          type: string
+          example: test123
+    Case:
+      type: object
+      properties:
+        case_id:
+          type: string
+          example: 2023-0910-02938
+        assigned_by:
+          type: string
+          example: Tom
+        assigned_to:
+          type: string
+          example: Cody
+        product:
+          type: string
+          example: Product1
+        time:
+          type: string
+          description: Default is current timestamp when assigning a case
+          example: Mon, 02 Oct 2023 16:56:10 GMT
+        mode:
+          type: string
+          enum:
+            - auto
+            - manual
+        comments:
+          type: string
+          example: Testing
+        priority:
+          type: string
+          example: p2
+        sf_account_name:
+          type: string
+          example: xyz
+        assignment_history:
+          type: string
+          example: ['ba','cd','ef']
+          description: string which is a list of usernames the case has been cat'ed to so far
+    Audit:
+      type: object
+      properties:
+        audit_id:
+          type: integer
+        user:
+          type: string
+          example: api
+        task_type:
+          type: string
+          example: ASSIGN CASE
+        task:
+          type: string
+          example:
+            case_id: 2023-0910-029384
+            assigned_to: poonam
+            assigned_by: api
+            product: P1
+            time: None
+            mode: auto
+            comments: this is an example
+            priority: None
+          description: A json formated string.
+        time:
+          type: string
+          example: Mon, 02 Oct 2023 16:56:10 GMT
+    ProductModel:
+      type: object
+      properties:
+        strategy:
+          type: string
+          enum:
+            - s1
+            - s2
+          description: strategy for distributing cases
+        max_days:
+          type: string
+          example: 3
+          description: maximum number of days to look back when trying to find the user to assign a case to. [look up is one day at a time]
+        max_days_month:
+          type: string
+          example: 300
+          description: maximum number of days to look back when trying to find the user to assign a case to. [look up is one month at a time]
+        case_regex:
+          type: string
+          example: ^[0-9]{4}-[0-9]{4}-[0-9]{6}$
+        quota_over_days:
+          type: integer
+          description: when quota is factored in, this variable is used to find how may days to look back. default is 1
+          example: 1
+        sf_api:
+          type: string
+          example: Salesforce API for fetching list of cases
+        sf_job_cron:
+          type: string
+          example: "* 6-17 * * 1-5"
+        sf_job_timezone:
+          type: string
+          example: US/Pacific
+        sf_product_series:
+          type: string
+          example: Session Smart Router
+        sf_platform:
+          type: string
+          example: Session Smart Router
+        sf_job_query_interval:
+          type: integer
+          description: how often to query sf api in mins
+          example: 1
+        sf_enabled:
+          type: boolean
+          description: Integrate with Sales
+          example: true
+        sf_init_email_name:
+          type: string
+          description: (optional) the email template name to use when sending initial response on a case beloging to an sf integrated product
+          example: email1
+    Product:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ProductModel'
+        - type: object
+      properties:
+        users:
+          type: string
+          example: user1
+        productname:
+          type: string
+          example: Product1
+    AddProduct:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/ProductModel'
+        - type: object
+      required:
+        - productname
+      properties:
+        productname:
+          type: string
+          example: Product1
+    TeamModel:
+      type: object
+      properties:
+        email:
+          type: string
+          example: abc@xyz.com
+        mswebhook:
+          type: string
+          example: https://junipernetworks.webhook.office.com/webhookb2/6ef427de-2e9
+          description: Microsoft teams webhook
+    AddTeam:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TeamModel'
+        - type: object
+      required:
+        - teamname
+      properties:
+        teamname:
+          type: string
+          example: Team1
+    Team:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/TeamModel'
+        - type: object
+      properties:
+        users:
+          type: string
+          example:
+            - user1
+            - user2
+          description: list of users supporting the product
+        teamname:
+          type: string
+          example: Team1
+    UserProduct:
+      type: object
+      required:
+        - username
+        - productname
+      properties:
+        productname:
+          type: string
+          example: Product1
+        username:
+          type: string
+          example: User1
+        active:
+          type: boolean
+        quota:
+          type: integer
+          format: int64
+          example: 1
+    Login:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+          example: User1
+        password:
+          type: string
+          example: pass123
+        muleuser:
+          type: boolean
+          example: False
+    CaseCountReq:
+      type: object
+      required:
+        - period
+        - interval
+      properties:
+        period:
+          type: integer
+          format: int64
+          example: 30
+          description: in days
+        interval:
+          type: integer
+          format: int64
+          example: 1
+          description: in days
+        productname:
+          type: string
+          example: Product1
+        teamname:
+          type: string
+          example: Team1
+    CaseCount:
+      type: object
+      additionalProperties:
+        type: integer
+    ReactivateUser:
+      type: object
+      required:
+        - datetime
+        - timezone
+        - active
+      properties:
+        datetime:
+          type: string
+          example: 2023/10/19 13:12
+        timezone:
+          type: string
+          example: US/Pacific
+        active:
+          type: boolean
+    ScheduleShiftChange:
+      type: object
+      required:
+        - datetime
+        - timezone
+        - shift_start
+        - shift_end
+      properties:
+        datetime:
+          type: string
+          example: 2023/10/19 13:12
+        timezone:
+          type: string
+          example: US/Pacific
+        shift_start:
+          type: string
+          example: '09:00:00'
+        shift_end:
+          type: string
+          example: '18:00:00'
+    ScheduleHandoffs:
+      type: object
+      required:
+        - datetime
+        - timezone
+      properties:
+        datetime:
+          type: string
+          example: 2023/10/19 13:12
+        timezone:
+          type: string
+          example: US/Pacific
+        check_in_shift:
+          type: boolean
+          example: false
+          description: whether to consider users shift hours when cat'ing the handoffs. Default is false
+    ScheduleSFIntegration:
+      type: object
+      required:
+        - datetime
+        - timezone
+        - sf_enabled
+      properties:
+        datetime:
+          type: string
+          example: 2023/10/19 13:12
+        timezone:
+          type: string
+          example: US/Pacific
+        sf_enabled:
+          type: boolean
+          example: true
+        holiday_list:
+          type: string
+          example: {"New Years": "2024-01-01", "MLK": "2024-01-15"}
+          description: json formated list of holidays
+    Comments:
+      type: object
+      properties:
+        comments:
+          type: string
+          example: testing
+    Jobs:
+      type: object
+      properties:
+        number:
+          type: integer
+        job_id:
+          type: string
+          example: deactivate_user_test
+        username:
+          type: string
+          example: user1
+          description: Username who submitted the job
+        job_type:
+          type: string
+          example: reactivate_user
+        details:
+          type: string
+          example: {"username": "bhimanshu", "datetime": "2023-11-08 11:22:00", "timezone": "US/Pacific", "active": false}
+          description: A json formated string.
+        time:
+          type: string
+          example: Mon, 02 Oct 2023 16:56:10 GMT
+        status:
+          type: string
+          example: Success
+    SalesforceEmailModel:
+      type: object
+      properties:
+        email_body:
+          type: string
+          example: This is example email body
+          description: The email body 
+        email_subject:
+          type: string
+          example: This is example email subject
+          description: The email subject 
+    AddSalesforceEmail:
+      type: object
+      required:
+        - email_name
+        - email_body
+      allOf:
+        - $ref: '#/components/schemas/SalesforceEmailModel'
+        - type: object
+      properties:
+        email_name:
+          type: string
+          example: email1
+    SalesforceEmail:
+      type: object
+      allOf:
+        - $ref: '#/components/schemas/SalesforceEmailModel'
+        - type: object
+      properties:
+        id:
+          type: integer
+          example: 2
+          description: internal id given to this email
+        user:
+          type: string
+          example: user1
+          description: Username of user who created the email
+        email_name:
+          type: string
+          example: email1

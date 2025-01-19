@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Jinja2 Variables List</legend>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+  <caption>List of all Cases</caption>
+    <thead>
+      <tr>
+        <th scope="col">Variable Name</th>
+        <th scope="col">Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th scope="col">assigned_to</th>
+            <th scope="col">The username who got the case assigned</th>
+        </tr>
+        <tr>
+            <th scope="col">assigned_to_full_name</th>
+            <th scope="col">The full name of user who got the case assigned</th>
+        </tr>
+        <tr>
+            <th scope="col">assigned_to_email</th>
+            <th scope="col">The email of user who got the case assigned</th>
+        </tr>
+        <tr>
+            <th scope="col">assigned_by</th>
+            <th scope="col">The username who assigned the case</th>
+        </tr>
+        <tr>
+            <th scope="col">assigned_by_full_name</th>
+            <th scope="col">The full name of user who assigned the case</th>
+        </tr>
+        <tr>
+            <th scope="col">assigned_by_email</th>
+            <th scope="col">The email of user who assigned the case</th>
+        </tr>
+    </tbody>
+  </table>
+{% endblock %}

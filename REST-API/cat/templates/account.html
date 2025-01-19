@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+      <form method="POST" action="" enctype="multipart/form-data" onsubmit="return confirm('Update account info?');">
+          {{ form.hidden_tag() }}
+          <fieldset class="form-group">
+              <legend class="border-bottom mb-4">User Account</legend>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" value="{{ current_user.username }}" aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
+              </div>
+              <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">Teamname</span>
+                <input type="text" class="form-control" value="{{ current_user.teamname }}" aria-label="Teamame" aria-describedby="basic-addon1" disabled="disabled">
+              </div>
+              <div class="form-group">
+                  {{ form.email.label(class="form-control-label") }}
+                  {% if form.email.errors %}
+                      {{ form.email(class="form-control form-control-lg is-invalid") }}
+                      <div class="invalid-feedback">
+                          {% for error in form.email.errors %}
+                              <span>{{ error }}</span>
+                          {% endfor %}
+                      </div>
+                  {% else %}
+                      {{ form.email(class="form-control form-control-lg") }}
+                  {% endif %}
+              </div>
+              <div class="dropdown-item">
+                {{ form.timezone.label(class="form-control-label") }}
+                {{ form.timezone(class="form-control form-control-md") }}
+              </div> 
+              <div class="form-check">
+                {{ form.active(class="form-check-input") }}
+                {{ form.active.label(class="form-check-label") }}
+              </div> 
+              <div class="form-check">
+                {{ form.team_email_notifications(class="form-check-input") }}
+                {{ form.team_email_notifications.label(class="form-check-label") }}
+              </div> 
+              <div class="form-check">
+                {{ form.monitor_case_updates(class="form-check-input") }}
+                {{ form.monitor_case_updates.label(class="form-check-label") }}
+              </div> 
+          </fieldset>
+          <div class="form-group">
+              {{ form.submit(class="btn btn-outline-info") }}
+          </div>
+          <div class="boder-top pt-3">
+            <small class="text-muted">
+                <a class="ml-2" href="{{ url_for('users_b.change_password') }}">Change Password</a>
+            </small>
+        </div>
+      </form>
+  </div>
+{% endblock content %}

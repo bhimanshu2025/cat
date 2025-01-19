@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Audit Details</legend>
+<article class="media content-section">
+  <div class="media-body">
+    <div class="article-metadata">
+      <a class="mr-2">{{ audit.user }}</a>
+      <small class="text-muted">{{ current_user.user_datetime(audit.time) }}</small>
+    </div>
+    <h2><a class="article-title">{{ audit.task_type }}</a></h2>
+    <p class="aticle-contentS" style="width: 700px;">{{ audit.task }}</p>
+  </div>
+</article>
+{% endblock %}

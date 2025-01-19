@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="card" style="width: 18rem;">
+    <!-- <img src="..." class="card-img-top" alt="..."> -->
+    <div class="card-body">
+      <legend class="border-bottom mb-4">Maintainer</legend>
+      <h5 class="card-title">Himanshu Bahukhandi</h5>
+      <p>Version : {{ config['BUILD'] }}</p>
+      <p class="card-text">bhimanshu@juniper.net </p>
+      <p class="card-text">cat@juniper.net </p>
+      <a href="https://css-git.juniper.net/bhimanshu/cat" class="btn btn-primary">Git</a>
+    </div>
+</div>
+<div class="card" style="width: 18rem;">
+  <!-- <img src="..." class="card-img-top" alt="..."> -->
+  <div class="card-body">
+    <legend class="border-bottom mb-4">Developer</legend>
+    <h5 class="card-title">Matthew Paskey</h5>
+    <p class="card-text">mpaskey@juniper.net </p>
+    <a href="https://css-git.juniper.net/mpaskey" class="btn btn-primary">Git</a>
+  </div>
+</div>
+
+{% endblock %}

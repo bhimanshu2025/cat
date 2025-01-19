@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Products</legend>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+  <caption>List of all products</caption>
+    <thead>
+      <tr>
+        <th scope="col">Productname</th>
+        <th scope="col">Case Regex</th>
+        <th scope="col">Strategy</th>
+        <th scope="col">Users</th>
+        <th scope="col">Max days</th>
+        <th scope="col">Max Months</th>
+        <th scope="col">Quota Over Days</th>
+        <th scope="col">Salesforce Integration</th>
+        <th scope="col">Operations</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for product in products %}
+        <tr>
+            {% if (current_user.admin) or current_user.username == "admin" %} 
+              <th scope="col"><a href="{{ url_for('products_b.edit_product', productname=product.productname) }}">{{ product.productname }}</a></th>
+            {% else %}
+              <th scope="col">{{ product.productname }}</th>
+            {% endif %}
+            <th scope="col">{{ product.case_regex }}</th>
+            <th scope="col">{{ product.strategy }}</th>
+            <th scope="col">{{ product.supported_by }}</th>
+            <th scope="col">{{ product.max_days }}</th>
+            <th scope="col">{{ product.max_days_month }}</th>
+            <th scope="col">{{ product.quota_over_days }}</th>
+            {% if product.sf_enabled %}
+              <th scope="col">Enabled</th>
+            {% else %}
+              <th scope="col">Disabled</th>
+            {% endif %}
+            {% if (current_user.admin) or current_user.username == "admin" %}
+              <th scope="col"><a href="{{ url_for('products_b.delete_product', productname=product.productname) }}" onclick="return confirm('Delete product {{ product.productname }}?')"><img class="icons-img" src="{{ url_for('static', filename='icons/trash.png') }}"></a><a href="{{ url_for('products_b.edit_product', productname=product.productname) }}"><img class="icons-img" src="{{ url_for('static', filename='icons/edit.png') }}"></a></th>
+            {% endif %}
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

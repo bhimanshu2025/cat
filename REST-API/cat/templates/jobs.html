@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Jobs</legend>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+  <caption>List of all jobs submitted by team: {{ current_user.teamname }} and user: admin</caption>
+    <thead>
+      <tr>
+        <th scope="col">Job #</th>
+        <th scope="col">Job ID</th>
+        <th scope="col">Submitted By</th>
+        <th scope="col">Job Type</th>
+        <th scope="col">Status</th>
+        <th scope="col">Details</th>
+        <th scope="col">Time ({{ current_user.timezone }})</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for job in jobs.items %}
+        {% if job.status == "Success" %}
+          <tr style="color:green">
+        {% elif job.status == "Failed" %}
+          <tr style="color:red">
+        {% elif job.status == "Scheduled" or job.status == "Rescheduled" %}
+          <tr style="color:orange">
+        {% else %}
+        <tr>
+        {% endif %}
+        <th scope="col">{{ job.number }}</th>
+        <th scope="col">{{ job.id }}</th>
+        <th scope="col">{{ job.username }}</th>
+        <th scope="col">{{ job.job_type }}</th>
+        <th scope="col">{{ job.status }}</th>
+        <th scope="col">{{ job.details }}</th>
+        <th scope="col">{{ current_user.user_datetime(job.time) }}</th>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% for page_num in jobs.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if page_num == jobs.page %}
+        <a class="btn btn-info mb-4" href="{{ url_for('users_b.jobs', page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('users_b.jobs', page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+{% endblock %}

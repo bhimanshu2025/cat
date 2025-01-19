@@ -1,0 +1,14 @@
+
+server {
+	listen 80;
+	server_name _;
+
+	location /static {
+		alias /var/www/cat/REST-API/cat/static;
+	}
+	location / {
+		        proxy_pass http://localhost:8000;
+        		include /etc/nginx/proxy_params;
+        		proxy_redirect off;
+	}
+}

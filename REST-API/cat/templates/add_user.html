@@ -1,0 +1,145 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="" onsubmit="return confirm('Confirm Operation?');">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            {% if legend == "Edit User" %}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" value="{{ username }}" aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
+            </div>
+            {% else %}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.username.label(class="form-control-label") }}
+                    {% if form.username.errors %}
+                        {{ form.username(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.username.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.username(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            {% endif %}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>   
+            <fieldset class="form-group form-row">
+                <div class="form-group">
+                    {{ form.first_name.label(class="form-control-label") }}
+                    {% if form.first_name.errors %}
+                        {{ form.first_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.first_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.first_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.last_name.label(class="form-control-label") }}
+                    {% if form.last_name.errors %}
+                        {{ form.last_name(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.last_name.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.last_name(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>   
+        </fieldset>
+        {% if legend == "Register User" %}
+        <fieldset class="form-group form-row">
+            <div class="form-group">
+                {{ form.password.label(class="form-control-label") }}
+                {% if form.password.errors %}
+                    {{ form.password(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.password(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+            <div class="form-group">
+                {{ form.confirm_password.label(class="form-control-label") }}
+                {% if form.confirm_password.errors %}
+                    {{ form.confirm_password(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.confirm_password.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.confirm_password(class="form-control form-control-lg") }}
+                {% endif %}
+            </div>
+        </fieldset>  
+        {% endif %}
+        <div class="dropdown-item">
+            {{ form.teamname.label(class="form-control-label") }}
+            {{ form.teamname(class="form-control form-control-md") }}
+        </div>   
+        <div class="dropdown-item">
+            {{ form.shift_start.label(class="form-control-label") }}
+            {{ form.shift_start(class="form-control form-control-md") }}
+        </div> 
+        <div class="dropdown-item">
+            {{ form.shift_end.label(class="form-control-label") }}
+            {{ form.shift_end(class="form-control form-control-md") }}
+        </div> 
+        <div class="dropdown-item">
+            {{ form.timezone.label(class="form-control-label") }}
+            {{ form.timezone(class="form-control form-control-md") }}
+        </div>  
+        <div class="form-check">
+            {{ form.active(class="form-check-input") }}
+            {{ form.active.label(class="form-check-label") }}
+        </div> 
+        <br>
+        <div class="form-check">
+            {{ form.team_email_notifications(class="form-check-input") }}
+            {{ form.team_email_notifications.label(class="form-check-label") }}
+        </div> 
+        <div class="form-check">
+            {{ form.monitor_case_updates(class="form-check-input") }}
+            {{ form.monitor_case_updates.label(class="form-check-label") }}
+        </div> 
+        <br>
+        {% if current_user.admin %}
+            <div class="form-check">
+                {{ form.admin(class="form-check-input") }}
+                {{ form.admin.label(class="form-check-label") }}
+            </div>
+        {% endif %}
+        <br> 
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>        
+{% endblock %}

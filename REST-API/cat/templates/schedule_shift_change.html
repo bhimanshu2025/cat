@@ -1,0 +1,67 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="" onsubmit="return confirm('Confirm scheduling user shift change?');">
+        {{ form.hidden_tag() }}
+        <legend class="border-bottom mb-4">Schedule User Shift Change</legend>
+        <fieldset class="form-group">
+            <div class="dropdown-item">
+                {{ form.username.label(class="form-control-label") }}
+                {{ form.username(class="form-control form-control-md") }}
+            </div>
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.datetime.label(class="form-control-label") }}
+                    {% if form.datetime.errors %}
+                        {{ form.datetime(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.datetime.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.datetime(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>   
+            <div class="dropdown-item">
+                {{ form.timezone.label(class="form-control-label") }}
+                {{ form.timezone(class="form-control form-control-md") }}
+            </div> <br><br>
+            <div class="dropdown-item">
+                {{ form.shift_start.label(class="form-control-label") }}
+                {{ form.shift_start(class="form-control form-control-md") }}
+            </div> 
+            <div class="dropdown-item">
+                {{ form.shift_end.label(class="form-control-label") }}
+                {{ form.shift_end(class="form-control form-control-md") }}
+            </div> 
+        </fieldset>   
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+    <caption>List of all active jobs</caption>
+      <thead>
+        <tr>
+          <th scope="col">Job Id</th>
+          <th scope="col">Details ({{ current_user.timezone }})</th>
+          <th scope="col">Operations</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for job in jobs %}
+        {% if job.id.split('_')[2] in l_usernames or current_user.username == "admin" %}
+        <tr>
+              <th scope="col">{{ job.id }}</th>
+              <th scope="col">{{ current_user.user_datetime(job.next_run_time) }}</th>
+              {% if job.id.split('_')[2] in l_usernames or current_user.username == "admin" %}
+                <th scope="col"><a href="{{ url_for('users_b.delete_job', jobid=job.id) }}" onclick="return confirm('Delete job {{ job.id }}?')"><img class="icons-img" src="{{ url_for('static', filename='icons/trash.png') }}"></a></th>
+              {% endif %}
+        </tr>
+        {% endif %}
+        {% endfor %}
+      </tbody>
+    </table>       
+{% endblock %}

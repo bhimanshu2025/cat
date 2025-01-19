@@ -1,0 +1,49 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section col-md-8">
+    <form method="POST" action="" onsubmit="return confirm('Confirm case unassignment?');">
+        {{ form.hidden_tag() }}
+        <legend class="border-bottom mb-4">Unassign Case</legend>
+        <fieldset class="form-group">
+            <div class="dropdown-item">
+                {{ form.caseid.label(class="form-control-label") }}
+                {{ form.caseid(class="form-control form-control-md") }}
+            </div>
+            <br>
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.caseid_text.label(class="form-control-label") }}
+                    {% if form.caseid_text.errors %}
+                        {{ form.caseid_text(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.caseid_text.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.caseid_text(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>   
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.comments.label(class="form-control-label") }}
+                    {% if form.comments.errors %}
+                        {{ form.comments(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.comments.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.comments(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>   
+        </fieldset>   
+        {% if form.caseid.choices != [] %}
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+        {% endif %}
+    </form>
+</div>        
+{% endblock %}

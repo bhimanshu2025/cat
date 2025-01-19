@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <div class="dropdown-item">
+                {{ form.caseid.label(class="form-control-label") }}
+                {{ form.caseid(class="form-control form-control-md") }}
+            </div>
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.comments.label(class="form-control-label") }}
+                    {% if form.comments.errors %}
+                        {{ form.comments(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.comments.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.comments(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>   
+        </fieldset>   
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>        
+{% endblock %}

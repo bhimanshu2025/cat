@@ -1,0 +1,180 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section">
+    <form method="POST" action="" onsubmit="return confirm('Confirm Operation?');">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            {% if legend == "Edit Product" %}
+            <div class="input-group mb-3">
+                <span class="input-group-text" id="basic-addon1">@</span>
+                <input type="text" class="form-control" value="{{ productname }}" aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
+            </div>
+            {% else %}
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.productname.label(class="form-control-label") }}
+                    {% if form.productname.errors %}
+                        {{ form.productname(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.productname.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.productname(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            {% endif %}  
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.regex.label(class="form-control-label") }}
+                    {% if form.regex.errors %}
+                        {{ form.regex(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.regex.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.regex(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>   
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.max_days.label(class="form-control-label") }}
+                    {% if form.max_days.errors %}
+                        {{ form.max_days(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.max_days.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.max_days(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>  
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.max_days_month.label(class="form-control-label") }}
+                    {% if form.max_days_month.errors %}
+                        {{ form.max_days_month(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.max_days_month.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.max_days_month(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>  
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.quota_over_days.label(class="form-control-label") }}
+                    {% if form.quota_over_days.errors %}
+                        {{ form.quota_over_days(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.quota_over_days.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.quota_over_days(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset>   
+            <div class="dropdown-item">
+                {{ form.strategy.label(class="form-control-label") }}
+                {{ form.strategy(class="form-control form-control-md") }}
+            </div>
+            <br><legend class="border-bottom mb-4"></legend>
+            <div class="form-check">
+                {{ form.sf_enabled(class="form-check-input") }}
+                {{ form.sf_enabled.label(class="form-check-label") }}
+            </div> 
+            <br>
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.sf_product_series.label(class="form-control-label") }}
+                    {% if form.sf_product_series.errors %}
+                        {{ form.sf_product_series(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.sf_product_series.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.sf_product_series(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset> 
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.sf_platform.label(class="form-control-label") }}
+                    {% if form.sf_platform.errors %}
+                        {{ form.sf_platform(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.sf_platform.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.sf_platform(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset> 
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.sf_mist_product.label(class="form-control-label") }}
+                    {% if form.sf_mist_product.errors %}
+                        {{ form.sf_mist_product(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.sf_mist_product.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.sf_mist_product(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset> 
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.sf_job_query_interval.label(class="form-control-label") }}
+                    {% if form.sf_job_query_interval.errors %}
+                        {{ form.sf_job_query_interval(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.sf_job_query_interval.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.sf_job_query_interval(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset> 
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.sf_job_cron.label(class="form-control-label") }}
+                    {% if form.sf_job_cron.errors %}
+                        {{ form.sf_job_cron(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.sf_job_cron.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.sf_job_cron(class="form-control form-control-lg") }}
+                    {% endif %}
+            </fieldset> 
+            <div class="dropdown-item">
+                {{ form.sf_job_timezone.label(class="form-control-label") }}
+                {{ form.sf_job_timezone(class="form-control form-control-md") }}
+            </div>  
+            <div class="dropdown-item">
+                {{ form.sf_init_email_name.label(class="form-control-label") }}
+                {{ form.sf_init_email_name(class="form-control form-control-md") }}
+            </div>  
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>        
+{% endblock %}

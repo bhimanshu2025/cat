@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Users</legend>
+{% for teamname, users in d_teams.items() %}
+<legend class="border-bottom mb-4 sm">{{ teamname }}</legend>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+  <caption>List of all users from team {{ teamname }}</caption>
+        <thead>
+        <tr>
+          <th scope="col">Username</th>
+          <th scope="col">Active</th>
+          <th scope="col">Shift Start</th>
+          <th scope="col">Shift End</th>
+          <th scope="col">Timezone</th>
+          <th scope="col">Products</th>
+          <th scope="col">User Since ({{current_user.timezone}})</th>
+          <th scope="col">Last Login ({{current_user.timezone}})</th>
+          <th scope="col">Admin</th>
+          <th scope="col">Email</th>
+          <th scope="col">Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+        <tr>
+          {% if (current_user.admin and current_user.teamname == user.teamname) or current_user.username == user.username or current_user.username == "admin"  %}
+            {% if user.active and user.in_shift %}
+              <th scope="col"><a style="color:green" href="{{ url_for('users_b.edit_user', username=user.username) }}">{{ user.username }}</a></th>
+            {% else %}
+              <th scope="col"><a style="color:red" href="{{ url_for('users_b.edit_user', username=user.username) }}">{{ user.username }}</a></th>
+            {% endif %}
+          {% else %}
+            {% if user.active and user.in_shift %}
+              <th scope="col"><a style="color:green">{{ user.username }}</a></th>
+            {% else %}
+              <th scope="col"><a style="color:red">{{ user.username }}</a></th>
+            {% endif %}
+          {% endif %}
+          <th scope="col">{{ user.active }}</th>
+          <th scope="col">{{ user.shift_start }}</th>
+          <th scope="col">{{ user.shift_end }}</th>
+          <th scope="col">{{ user.timezone }}</th>
+          <th scope="col">{{ user.products }}</th>
+          <th scope="col">{{ current_user.user_datetime(user.user_since) }}</th>
+          <th scope="col">{{ current_user.user_datetime(user.last_login) }}</th>
+          <th scope="col">{{ user.admin }}</th>
+          <th scope="col">{{ user.email }}</th>
+          {% if (current_user.admin and current_user.teamname == user.teamname) or current_user.username == user.username or current_user.username == "admin" %}
+            <th scope="col"><a href="{{ url_for('users_b.delete_user', username=user.username) }}" onclick="return confirm('Delete user {{ user.username }}?')"><img class="icons-img" src="{{ url_for('static', filename='icons/trash.png') }}"></a><a href="{{ url_for('users_b.edit_user', username=user.username) }}"><img class="icons-img" src="{{ url_for('static', filename='icons/edit.png') }}"></a></th>
+          {% endif %}
+        </tr>
+        {% endfor %}
+        </tbody>
+</table>
+{% endfor %}
+{% endblock %}

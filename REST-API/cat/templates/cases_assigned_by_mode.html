@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+{% block content %}
+<legend class="border-bottom mb-4">Cases Assigned ({{ cases.total }})</legend>
+<table class="table table-hover table-sm table-striped table-bordered border-primary align-top">
+    <caption>List of all Cases</caption>
+      <thead>
+        <tr>
+          <th scope="col">Case ID</th>
+          <th scope="col">Product</th>
+          <th scope="col">Assigned To</th>
+          <th scope="col">Assigned By</th>
+          <th scope="col">Time ({{ current_user.timezone }})</th>
+          <th scope="col">Priority</th>
+          <th scope="col">Comments</th>
+          <th scope="col">Mode</th>
+          <th scope="col">Account Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for case in cases.items %}
+          {% if case.mode == "auto" %}
+            <tr class="table-success">
+          {% else %}
+            <tr>
+          {% endif %}
+          <th scope="col"><a href="{{ url_for('main.salesforce_case_details', case_id=case.id) }}">{{ case.id }}</a></th>
+          <th scope="col"><a href="{{ url_for('main.cases_of_product', productname=case.product) }}">{{ case.product }}</a></th>
+          <th scope="col"><a href="{{ url_for('main.cases_of_user', username=case.user) }}">{{ case.user }}</a></th>
+          <th scope="col"><a href="{{ url_for('main.cases_assigned_by_user', username=case.assigned_by) }}">{{ case.assigned_by }}</a></th>
+          <th scope="col">{{ current_user.user_datetime(case.time) }}</th>
+          <th scope="col"><a href="{{ url_for('main.cases_assigned_by_priority', priority=case.priority) }}">{{ case.priority }}</a></th>
+          <th scope="col">{{ case.comments }}</th>
+          <th scope="col"><a href="{{ url_for('main.cases_assigned_by_mode', mode=case.mode) }}">{{ case.mode }}</a></th>
+          <th scope="col">{{ case.sf_account_name }}</th>
+        </tr>
+        {% endfor %}
+      </tbody>
+</table>
+  {% for page_num in cases.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+    {% if page_num %}
+      {% if page_num == cases.page %}
+        <a class="btn btn-info mb-4" href="{{ url_for('main.cases_assigned_by_mode', mode=mode, page=page_num) }}">{{ page_num }}</a>
+      {% else %}
+        <a class="btn btn-outline-info mb-4" href="{{ url_for('main.cases_assigned_by_mode', mode=mode, page=page_num) }}">{{ page_num }}</a>
+      {% endif %}
+    {% else %}
+      ...
+    {% endif %}
+  {% endfor %}
+{% endblock %}

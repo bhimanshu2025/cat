@@ -1,0 +1,64 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section" >
+    <form method="POST" action="" onsubmit="return confirm('Confirm Operation?');">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">{{ legend }}</legend>
+            <fieldset class="form-group">
+                {% if legend == "Edit Team" %}
+                <div class="input-group mb-3">
+                    <span class="input-group-text" id="basic-addon1">@</span>
+                    <input type="text" class="form-control" value="{{ teamname }}" aria-label="Username" aria-describedby="basic-addon1" disabled="disabled">
+                </div>
+                {% else %}
+                <div class="form-group">
+                    {{ form.teamname.label(class="form-control-label") }}
+                    {% if form.teamname.errors %}
+                        {{ form.teamname(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.teamname.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.teamname(class="form-control form-control-lg ghen") }}
+                    {% endif %}
+                </div>
+                {% endif %}
+            </fieldset>  
+            <fieldset class="form-group">
+                <div class="form-group">
+                    {{ form.email.label(class="form-control-label") }}
+                    {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.email(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+                <div class="form-group">
+                    {{ form.mswebhook.label(class="form-control-label") }}
+                    {% if form.mswebhook.errors %}
+                        {{ form.mswebhook(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.mswebhook.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.mswebhook(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>   
+        </fieldset>
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+    </form>
+</div>        
+{% endblock %}

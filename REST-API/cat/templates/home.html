@@ -1,0 +1,83 @@
+{% extends "layout.html" %}
+{% block content %}
+<div class="content-section col-md-8">
+    <form method="POST" action="" onsubmit="return confirm('Confirm case assignment?');">
+        {{ form.hidden_tag() }}
+        <legend class="border-bottom mb-4">Assign Case</legend>
+        <fieldset class="form-group">
+            <fieldset class="form-group">
+                <div class="dropdown-item">
+                    {{ form.caseid.label(class="form-control-label") }}
+                    {{ form.caseid(class="form-control form-control-md") }}
+                </div>
+                <div class="form-group">
+                    {{ form.caseid_text.label(class="form-control-label") }}
+                    {% if form.caseid_text.errors %}
+                        {{ form.caseid_text(class="form-control form-control-lg is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.caseid_text.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        {{ form.caseid_text(class="form-control form-control-lg") }}
+                    {% endif %}
+                </div>
+            </fieldset>
+            <div class="form-check">
+                {{ form.check_in_shift(class="form-check-input") }}
+                {{ form.check_in_shift.label(class="form-check-label") }}
+            </div> 
+        </fieldset>   
+        <fieldset>   
+            <legend class="border-bottom mb-4"></legend>
+            <div class="dropdown-item">
+                {{ form.mode.label(class="form-control-label") }}
+                {{ form.mode(class="form-control form-control-md") }}
+            </div>        
+            <div class="dropdown-item">
+                {{ form.user.label(class="form-control-label") }}
+                {{ form.user(class="form-control form-control-md") }}
+            </div>      
+        </fieldset>   
+        <fieldset>  
+            <div class="dropdown-item">
+                {{ form.product.label(class="form-control-label") }}
+                {{ form.product(class="form-control form-control-md") }}
+            </div>      
+        </fieldset>   
+        <fieldset>  
+            <div class="dropdown-item">
+                {{ form.delayed_assignment.label(class="form-control-label") }}
+                {{ form.delayed_assignment(class="form-control form-control-md") }}
+            </div>      
+        </fieldset>   
+        <fieldset>  
+            <div class="dropdown-item">
+                {{ form.sf_email_name.label(class="form-control-label") }}
+                {{ form.sf_email_name(class="form-control form-control-md") }}
+            </div>      
+        </fieldset>   
+        <br>
+        <fieldset class="form-group">
+            <div class="form-group">
+                {{ form.comments.label(class="form-control-label") }}
+                {% if form.comments.errors %}
+                    {{ form.comments(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.comments.errors %}
+                            <span>{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                {% else %}
+                    {{ form.comments(class="form-control form-control-lg") }}
+                {% endif %}
+        </fieldset>
+        {% if current_user.product_names() != [] %}
+        <div class="form-group">
+            {{ form.submit(class="btn btn-outline-info") }}
+        </div>
+        {% endif %}
+    </form>
+</div>
+{% endblock %}

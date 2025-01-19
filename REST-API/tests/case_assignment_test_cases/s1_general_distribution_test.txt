@@ -1,0 +1,60 @@
+Scenario tested on Oct 5, 2023
+
+Assumtions:
+- All 4 users have same quota of 1 and are only support one product. All users were added 4 days ago and below are the cases assigned so far : TABLE 1
+
+Product(quota_days) P5(1), (max_days) 30, (max_days_month) 300
+Strategy: s1
+Team T5
+Users(quota): u5(1), u6(1), u7(1), u8(1)
+
+TABLE 1
+# of days ago                u5            u6             u7           u8 
+4                            1             2              3            0
+3                            1             1              2            0
+2                            2             1              0            0
+1                            1             1              1            0
+
+Total on before day 0:       5             5              6            0
+
+TABLE 2
+
+Day 0
+# of cases       u5        u6       u7         u8                 List of Eligible Users day 0     Computation numbers(num of                                   Comments
+                                                                                                   cases assigned over quota_days * quota)
+0                0         0        0          0                  []
+1                0         0        0          1*                 [u5, u6, u7, u8]                  day 0 [0, 0, 0, 0], day -1 [1, 1, 1, 0]                     u8 had least cases in last 2 days.
+2                0         0        1*         1                  [u5, u6, u7]                      day 0 [0, 0, 0], day -1 [1, 1, 1], day -2 [3, 2, 1]         after looking back uptil day3, u7 is chosen 
+3                0         1*       1          1                  [u5, u6]                          day 0 [0, 0], day -1 [1, 1], day -2 [3, 2]        
+
+Day 1
+# of cases       u5        u6       u7         u8                 List of Eligible Users day 0     Computation numbers(num of                     Comments
+                                                                                                   cases assigned over quota_days * quota)
+0                0         0        0          0                  []
+1                1*        0        0          0                  [u5, u6, u7, u8]                  day 0 [0, 0, 0, 0], day -1 [0, 1, 1, 1]
+2                1         0        0          1*                 [u6, u7, u8]                      day 0 [0, 0, 0], day -1 [1, 1, 1], day -2 [2, 2, 1]
+3                1         0        1*         1                  [u6, u7]                          day 0 [0, 0], day -1 [1, 1], day -2 [2, 2], day -3 [3, 2]
+4                1         1*       1          1                  [u6]                              day 0 [0]
+5                2*        1        1          1                  [u5, 6, u7, u8]                   day 0 [1, 1, 1, 1], day -1 [1, 2, 2, 2]
+
+Day 2
+# of cases       u5        u6       u7         u8                 List of Eligible Users day 0     Computation numbers(num of                     Comments
+                                                                                                   cases assigned over quota_days * quota)
+0                0         0        0          0                  []
+1                0         0        0          1*                 [u5, u6, u7, u8]                  day 0 [0, 0, 0, 0], day -1 [2, 1, 1, 1], day -2 [x, 2, 2, 2], day -3 [x, 3, 3, 2]
+2                0         0        1*         1                  [u5, u6, u7]                      day 0 [0, 0, 0], day -1 [2, 1, 1], day -2 [x, 2, 2], day -3 [x, 3, 3], day -4 [x, 4, 3]
+3                0         1*       1          1                  [u5, u6]                          day 0 [0, 0], day -1 [2, 1]
+
+
+Day 3
+# of cases       u5        u6       u7         u8                 List of Eligible Users day 0     Computation numbers(num of                     Comments
+                                                                                                   cases assigned over quota_days * quota)
+0                0         0        0          0                  []
+1                1*        0        0          0                  [u5, u6, u7, u8]                  day 0 [0, 0, 0, 0], day -1 [0, 1, 1, 1]
+2                1         0        0          1*                 [u6, u7, u8]                      day 0 [0, 0, 0], day -1 [1, 1, 1], day -2 [2, 2, 2], day -3 [3, 3, 3], day -4 [4, 4, 4], day -5 [5, 5, 4]
+3                1         0        1*         1                  [u6, u7]                          day 0 [0, 0], day -1 [1, 1], day -2 [2, 2], day -3 [3, 3], day -4 [4, 4], day -5 [5, 5], day -6 [6, 5]
+4                1         1*       1          1                  [u6]                              day 0 [0]
+5                2*        1        1          1                  [u5, u6, u7, u8]                  day 0 [1, 1, 1, 1], day -1 [1, 2, 2, 2]
+
+
+Total            9         9        10         4 
