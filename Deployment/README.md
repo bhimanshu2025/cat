@@ -1,14 +1,6 @@
-OPTION 1 (RECOMMENDED FOR PRODUCTION): Kubernetes
-Follow cat/Deployment/kubernetes/README.md to deploy the two tier app (mysql db and the cat app)
 
 
-
-OPTION 2 (RECOMMENDED FOR DEV AND TESTING): Docker
-Follow cat/Deployment/Docker/README.md to deploy the two tier app (mysql db and the cat app)
-
-
-
-OPTION 3 (RECOMMENDED FOR DEV ONLY): Raw install 
+OPTION 1: Raw install 
 
 Install Ubuntu 18.04.4 VM
 
@@ -76,3 +68,12 @@ Flask Alembic
 make sure the init functions called in __init__.py for app are commented like create jobs etc
 flask db migrate -m "added sf_mist_product column to product"   << Creates a version locally>>
 flask db upgrade   <<Pushes the version changes to DB>>
+
+
+OPTION 2: Kubernetes
+Follow cat/Deployment/kubernetes/README.md to deploy the two tier app (mysql db and the cat app)
+
+
+OPTION 3: Docker
+Follow cat/Deployment/Docker/README.md to deploy the two tier app (mysql db and the cat app)
+

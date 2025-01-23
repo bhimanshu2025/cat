@@ -1,8 +1,20 @@
-SUMMARY: At its core the tool distributes cases between members of a team or teams supporting a product. Each product can have its own load distribution settings. The tool also ingrates with external tools like salesforce and microsoft teams. The goal is to be able to adapt to existing tools so from the end users perpective they can keep using the existing tools for most of their daily tasks. The tool should be able to do its job talking to infrastructure that already exists. Another goal is to do provide a platform for teams to build modules for doing some initial case analysis when a case is assigned. The teams supporting products have the expert knowledge that to an extent can be utilized in doing initial analysis. The tool will provide the ability to onboard such modules that the tool can then use to apply on data fetched from salesforce
+The tool is intended for teams that want to distribute cases/tickets among its team members
+
+SUMMARY: At its core the tool distributes cases between members of a team or teams supporting a product. Each product can have its own load distribution settings. The tool also ingrates with external tools like salesforce and microsoft teams. 
+
+Below is short list of tools features:
+1. Admin user is a predefined user and its password is configured through the config file. 
+2. Admin user can create other admin users, teams and products. The admin user can also associate users with products
+3. Once a user is associated with a product, they are part of round robin case distribution cycle
+4. User status can be disabled for all products or specific ones to not get any cases
+5. The tool also allows scheduling of tasks such as user status change, user shift timing change.
+6. There are options to integrate the tool with Microsoft teams using teams incoming webhooks.
+7. There are options to integrate the tool with SalesForce to fetch list of newly created cases periodically and automatically CAT them.
+8. The tool also offers options to configure initial response email that can be posted on a case on behalf of user during CAT auto-cases assignment.
 
 For deployment instructions refer cat/Deployments/README.md
 
-Case Assignment Logic :-
+Case Assignment Logic (Internal to the App.):-
 
 STEP 1: The initial goal is to find List of eligible users to assign the case to. Inorder to understand the logic behind finding the list of eligible users, its important to understand below variables
 
