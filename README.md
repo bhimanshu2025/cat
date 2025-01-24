@@ -1,4 +1,4 @@
-## CAT
+## CAT - CASE ASSIGNMENT TOOL
 The tool is intended for teams that want to distribute cases/tickets among their team members
 
 # SUMMARY
