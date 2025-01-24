@@ -1,5 +1,5 @@
 ## CAT
-The tool is intended for teams that want to distribute cases/tickets among its team members
+The tool is intended for teams that want to distribute cases/tickets among their team members
 
 # SUMMARY
 At its core the tool distributes cases between members of a team or teams supporting a product. Each product can have its own load distribution settings. The tool also ingrates with external tools like salesforce and microsoft teams. 
