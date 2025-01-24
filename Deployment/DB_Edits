@@ -1,0 +1,24 @@
+For Internal Use Only
+
+
+(Make sure sqlite3 package is installed if using local db)
+```
+\# dpkg -l | grep sql
+ii  libsqlite3-0:amd64               3.22.0-1ubuntu0.3                           amd64        SQLite 3 shared library
+```
+create local sqlite DB (OPTIONAL, one time only - may need to edit the run.py and cat/__init__.py for below to work)
+```
+[root@vm23 ~]# cd /root/cat/REST-API
+(venv) root@vm8:~/cat/REST-API# ls
+cat  migrations  run.py  tests
+(venv) root@vm8:~/cat/REST-API# python
+Python 3.6.9 (default, Mar 10 2023, 16:46:00) 
+[GCC 8.4.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+>>> from cat import db
+/usr/local/lib/python3.6/site-packages/flask_sqlalchemy/__init__.py:873: FSADeprecationWarning: SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and will be disabled by default in the future.  Set it to True or False to suppress this warning.
+  'SQLALCHEMY_TRACK_MODIFICATIONS adds significant overhead and '
+>>> db.drop_all()
+>>> db.create_all()
+>>> db.session.commit()
+```
