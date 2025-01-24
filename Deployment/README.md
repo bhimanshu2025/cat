@@ -61,7 +61,10 @@ cd /root/cat/REST-API/
 python run.py
 ```
 
-## STEP 7
+## STEP 7  [OPTIONAL]
+Make necessary customizations in /root/cat/REST-API/cat/config.py
+
+## STEP 8
 Access the Application through a browser at http://<server IP>:5000
 
 # OPTION 2: Kubernetes [WIP]
@@ -70,3 +73,4 @@ Follow cat/Deployment/kubernetes/README.md to deploy the two tier app (mysql db 
 # OPTION 3: Docker [WIP]
 Follow cat/Deployment/Docker/README.md to deploy the two tier app (mysql db and the cat app)
 
+Follow https://github.com/bhimanshu2025/cat/blob/master/Deployment/Getting_Started_CAT.docx to get started
