@@ -33,7 +33,7 @@ kubectl apply -f cat-depl.yml
 # STEP 4: 
 Make sure the 2 pods are running
 ```
-\# kubectl get pods -o wide
+# kubectl get pods -o wide
 NAME                                READY   STATUS    RESTARTS   AGE     IP           NODE      NOMINATED NODE   READINESS GATES
 catapp-deployment-c6996858b-4zmnp   1/1     Running   0          39s     10.244.2.2   worker2   <none>           <none>
 mysql-7dd8b8c9c5-b4rbx              1/1     Running   0          2m37s   10.244.3.3   worker3   <none>           <none>
