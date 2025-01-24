@@ -11,6 +11,8 @@ Below is short list of tools features:
 6. There are options to integrate the tool with Microsoft teams using teams incoming webhooks.
 7. There are options to integrate the tool with SalesForce to fetch list of newly created cases periodically and automatically CAT them.
 8. The tool also offers options to configure initial response email that can be posted on a case on behalf of user during CAT auto-cases assignment.
+9. Most of the UI operations can be performed using REST API that the tool exposes.
+10. Tracks all operations under Audit history.
 
 For deployment instructions refer cat/Deployments/README.md
 
