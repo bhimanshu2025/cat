@@ -64,9 +64,9 @@ python run.py
 ## STEP 7
 Access the Application through a browser at http://<server IP>:5000
 
-# OPTION 2: Kubernetes
+# OPTION 2: Kubernetes [WIP]
 Follow cat/Deployment/kubernetes/README.md to deploy the two tier app (mysql db and the cat app)
 
-# OPTION 3: Docker
+# OPTION 3: Docker [WIP]
 Follow cat/Deployment/Docker/README.md to deploy the two tier app (mysql db and the cat app)
 
